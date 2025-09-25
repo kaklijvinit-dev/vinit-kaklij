@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hello Doctor - Your Smart Health Assistant</title>
+    <style>
+        /* Base Styles */
+        :root {
+            --primary: #2a7de1;
+            --secondary: #34c759;
+            --dark: #1a365d;
+            --light: #f8fafc;
+            --gray: #64748b;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light);
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px 0;
+        }
+        
+        section {
+            padding: 60px 0;
+        }
+        
+        h1, h2, h3, h4 {
+            color: var(--dark);
+            margin-bottom: 20px;
+        }
+        
+        p {
+            margin-bottom: 15px;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn:hover {
+            background: var(--dark);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        /* Header Styles */
+        header {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        
+        .logo span {
+            color: var(--secondary);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 30px;
+        }
+        
+        nav ul li a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav ul li a:hover {
+            color: var(--primary);
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--primary), #1e4a8a);
+            color: white;
+            text-align: center;
+            padding: 150px 0 100px;
+            margin-top: 70px;
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: white;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 30px;
+        }
+        
+        /* Section Styles */
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            width: 70px;
+            height: 4px;
+            background: var(--secondary);
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        /* Healthcare Problems Section */
+        .problems-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .problem-card {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s;
+        }
+        
+        .problem-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .problem-card h3 {
+            color: var(--primary);
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+        
+        /* Why Choose Us Section */
+        .why-choose {
+            background: #f0f7ff;
+        }
+        
+        .benefits {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+        }
+        
+        .benefit {
+            flex: 1;
+            min-width: 250px;
+            text-align: center;
+            padding: 30px 20px;
+        }
+        
+        .benefit-icon {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+        
+        /* Features Section */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+        
+        .feature {
+            text-align: center;
+            padding: 30px 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        .feature-number {
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            line-height: 50px;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+        
+        /* User Journey Section */
+        .user-journey {
+            background: #f0f7ff;
+            text-align: center;
+        }
+        
+        .steps {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 40px;
+            margin-top: 40px;
+        }
+        
+        .step {
+            flex: 1;
+            min-width: 200px;
+            max-width: 300px;
+        }
+        
+        .step-number {
+            display: inline-block;
+            width: 60px;
+            height: 60px;
+            background: var(--secondary);
+            color: white;
+            border-radius: 50%;
+            line-height: 60px;
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+        
+        /* Target Audience Section */
+        .audience {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+        }
+        
+        .audience-card {
+            flex: 1;
+            min-width: 300px;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            text-align: center;
+        }
+        
+        .audience-card h3 {
+            color: var(--primary);
+        }
+        
+        /* Security Section */
+        .security {
+            background: #f0f7ff;
+        }
+        
+        .security-features {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+        }
+        
+        .security-feature {
+            flex: 1;
+            min-width: 250px;
+            text-align: center;
+            padding: 30px 20px;
+        }
+        
+        /* CTA Section */
+        .cta {
+            background: linear-gradient(135deg, var(--primary), #1e4a8a);
+            color: white;
+            text-align: center;
+            padding: 80px 0;
+        }
+        
+        .cta h2 {
+            color: white;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+        
+        .cta p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 30px;
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 50px 0 20px;
+            text-align: center;
+        }
+        
+        .footer-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin-bottom: 30px;
+        }
+        
+        .footer-section {
+            flex: 1;
+            min-width: 250px;
+            margin-bottom: 30px;
+        }
+        
+        .footer-section h3 {
+            color: white;
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+        }
+        
+        .footer-bottom {
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .developer-credit {
+            margin-top: 10px;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 15px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            nav ul li {
+                margin: 5px 15px;
+            }
+            
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .section-title h2 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">Hello <span>Doctor</span></div>
+                <nav>
+                    <ul>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#problems">Problems</a></li>
+                        <li><a href="#why-choose">Why Choose Us</a></li>
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="#how-it-works">How It Works</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>Your Smart Health Assistant</h1>
+            <p>Revolutionary healthcare app connecting you with certified doctors through simple phone calls. Get prescriptions and medical advice from the comfort of your home.</p>
+            <a href="#how-it-works" class="btn">Get Started</a>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about">
+        <div class="container">
+            <div class="section-title">
+                <h2>Healthcare Revolution</h2>
+            </div>
+            <div class="benefits">
+                <div class="benefit">
+                    <div class="benefit-icon">📞</div>
+                    <h3>Instant Connection</h3>
+                    <p>Connect with certified doctors through simple phone calls whenever you need medical guidance.</p>
+                </div>
+                <div class="benefit">
+                    <div class="benefit-icon">💊</div>
+                    <h3>Digital Prescriptions</h3>
+                    <p>Receive legitimate prescriptions digitally, eliminating the need for physical visits for routine consultations.</p>
+                </div>
+                <div class="benefit">
+                    <div class="benefit-icon">🔒</div>
+                    <h3>Reliable Access</h3>
+                    <p>Easy, quick, and dependable healthcare access that fits into your busy lifestyle.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Problems Section -->
+    <section id="problems" class="problems">
+        <div class="container">
+            <div class="section-title">
+                <h2>Problems in Healthcare System</h2>
+            </div>
+            <div class="problems-grid">
+                <div class="problem-card">
+                    <h3>Long Waiting & Overcrowding</h3>
+                    <p>Delays even with prior appointments, wasting valuable time.</p>
+                </div>
+                <div class="problem-card">
+                    <h3>Accessibility Issues</h3>
+                    <p>Difficult travel for rural & elderly patients, costly transport.</p>
+                </div>
+                <div class="problem-card">
+                    <h3>High Costs</h3>
+                    <p>Consultation, medicines, and hidden charges add up quickly.</p>
+                </div>
+                <div class="problem-card">
+                    <h3>Short Consultation Time</h3>
+                    <p>Doctors rush, patients can't explain fully their concerns.</p>
+                </div>
+                <div class="problem-card">
+                    <h3>Communication Barriers</h3>
+                    <p>Medical jargon & language differences hinder understanding.</p>
+                </div>
+                <div class="problem-card">
+                    <h3>Privacy Concerns</h3>
+                    <p>No private space, hesitation in sharing sensitive issues.</p>
+                </div>
+                <div class="problem-card">
+                    <h3>Follow-up Difficulties</h3>
+                    <p>Revisits needed even for small clarifications.</p>
+                </div>
+                <div class="problem-card">
+                    <h3>Emotional Barriers</h3>
+                    <p>Fear, anxiety, embarrassment reduce honest reporting.</p>
+                </div>
+                <div class="problem-card">
+                    <h3>Infection Risk</h3>
+                    <p>Overcrowding increases chances of catching diseases.</p>
+                </div>
+                <div class="problem-card">
+                    <h3>Poor Record Management</h3>
+                    <p>Lost papers, no centralized medical history.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Choose Us Section -->
+    <section id="why-choose" class="why-choose">
+        <div class="container">
+            <div class="section-title">
+                <h2>Why Choose Hellow Doctor?</h2>
+            </div>
+            <div class="benefits">
+                <div class="benefit">
+                    <div class="benefit-icon">⏱️</div>
+                    <h3>Saves Time</h3>
+                    <p>No more waiting rooms or travel time. Get medical advice instantly without leaving your location.</p>
+                </div>
+                <div class="benefit">
+                    <div class="benefit-icon">🏠</div>
+                    <h3>Home Comfort</h3>
+                    <p>Access professional healthcare from the comfort and privacy of your own home environment.</p>
+                </div>
+                <div class="benefit">
+                    <div class="benefit-icon">💰</div>
+                    <h3>Affordable Care</h3>
+                    <p>Competitive consultation charges make quality healthcare accessible to everyone.</p>
+                </div>
+                <div class="benefit">
+                    <div class="benefit-icon">⚡</div>
+                    <h3>Immediate Medical Guidance</h3>
+                    <p>Get instant access to professional medical advice when you need it most. No appointments, no delays.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Target Audience Section -->
+    <section id="audience">
+        <div class="container">
+            <div class="section-title">
+                <h2>Perfect for Everyone</h2>
+            </div>
+            <div class="audience">
+                <div class="audience-card">
+                    <h3>Elderly Patients</h3>
+                    <p>Convenient healthcare access without the challenges of traveling to medical facilities.</p>
+                </div>
+                <div class="audience-card">
+                    <h3>Remote Areas</h3>
+                    <p>Bridge the gap between rural communities and quality medical professionals.</p>
+                </div>
+                <div class="audience-card">
+                    <h3>Busy Professionals</h3>
+                    <p>Get medical advice that fits into your schedule, anytime and anywhere.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Core Features</h2>
+            </div>
+            <div class="features">
+                <div class="feature">
+                    <div class="feature-number">01</div>
+                    <h3>Phone Consultations</h3>
+                    <p>Direct phone-based consultations with certified and experienced medical doctors.</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-number">02</div>
+                    <h3>Digital Prescriptions</h3>
+                    <p>Receive legitimate digital prescriptions that you can use at any pharmacy.</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-number">03</div>
+                    <h3>Secure Privacy</h3>
+                    <p>All medical advice and consultations are completely secure and confidential.</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-number">04</div>
+                    <h3>24/7 Availability</h3>
+                    <p>Round-the-clock access to medical professionals whenever health concerns arise.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section id="how-it-works" class="user-journey">
+        <div class="container">
+            <div class="section-title">
+                <h2>User-Friendly Experience</h2>
+            </div>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Download App</h3>
+                    <p>Simple installation process on your mobile device.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>Make Call</h3>
+                    <p>Connect instantly with available medical professionals.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Get Prescription</h3>
+                    <p>Receive digital prescriptions and medical advice immediately.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Security Section -->
+    <section id="security" class="security">
+        <div class="container">
+            <div class="section-title">
+                <h2>Security & Trust</h2>
+            </div>
+            <div class="security-features">
+                <div class="security-feature">
+                    <div class="benefit-icon">👨‍⚕️</div>
+                    <h3>Certified Doctors</h3>
+                    <p>All medical professionals are fully certified and licensed to practice medicine.</p>
+                </div>
+                <div class="security-feature">
+                    <div class="benefit-icon">🔒</div>
+                    <h3>Private Consultations</h3>
+                    <p>Your medical information and conversations remain completely confidential and secure.</p>
+                </div>
+                <div class="security-feature">
+                    <div class="benefit-icon">🛡️</div>
+                    <h3>Reliable Platform</h3>
+                    <p>Trusted healthcare technology that prioritizes patient safety and data protection.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+  <!-- CTA Section -->
+<section class="cta">
+    <div class="container">
+        <h2>Your Doctor is Just a Call Away!</h2>
+        <p>Experience the future of healthcare with Hellow Doctor. Download today and discover how easy medical consultations can be.</p>
+        <a href="#" class="btn" id="downloadBtn">Download Now</a>
+    </div>
+</section>
+
+<script>
+    // Download button functionality
+    document.getElementById('downloadBtn').addEventListener('click', function() {
+        const link = document.createElement('a');
+        link.href = 'New folder/Code clinic.pptx'; // Path to your file
+        link.download = 'Code clinic.pptx'; // Name for the downloaded file
+        link.click();
+    });
+</script>
+
+
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Hello Doctor</h3>
+                    <p>"Hello Doctor makes healthcare accessible, affordable, and convenient for everyone. Quality medical care should never be limited by location or schedule."</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact Info</h3>
+                    <p>Email: kaklijvinit.com</p>
+                    <p>Phone: 7588455274</p>
+                    <p>Address: Nashik</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <p><a href="#about" style="color: white;">About Us</a></p>
+                    <p><a href="#features" style="color: white;">Features</a></p>
+                    <p><a href="#how-it-works" style="color: white;">How It Works</a></p>
+                    <p><a href="#security" style="color: white;">Security</a></p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Hello Doctor. All rights reserved. | Team MH Espoort (Free Fire)</p>
+                <p class="developer-credit">Website developed by vinit kaklij</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('nav a').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                const targetSection = document.querySelector(targetId);
+                
+                window.scrollTo({
+                    top: targetSection.offsetTop - 70,
+                    behavior: 'smooth'
+                });
+            });
+        });
+        
+        // Simple animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = 1;
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe elements for animation
+        document.querySelectorAll('.problem-card, .benefit, .feature, .step, .audience-card, .security-feature').forEach(el => {
+            el.style.opacity = 0;
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
